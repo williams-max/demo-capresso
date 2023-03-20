@@ -2,12 +2,13 @@
 //import { SplashScreenProvider } from './core/context/SplashScrean'
 //import { BrowserRouter } from 'react-router-dom'
 import { Navigation } from './app/Navigation'
+import  MuiNavbar  from './core/components/navbar/MuiNavbar'
 
 
 function App () {
   return (
   <div>
-    hola 2
+    <MuiNavbar />
   </div>
   )
 }
