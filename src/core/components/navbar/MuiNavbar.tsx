@@ -1,20 +1,3 @@
-/*import { AppBar, IconButton, Toolbar, Typography} from "@mui/material"
-import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon"
-
-export const MuiNavbar = () => {
-    return (
-        <AppBar position="static">
-           <Toolbar>
-                <IconButton size='large' edge='start' color= 'inherit' aria-label="logo">
-                    <CatchingPokemonIcon />
-                </IconButton>
-                <Typography variant="h6" component='div'>
-                    POKEMONAPP
-                </Typography>
-           </Toolbar>
-        </AppBar>
-    )
-}*/
 
 import * as React from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
@@ -36,6 +19,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+
+
+import ListSubheader from '@mui/material/ListSubheader';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+
+import Collapse from '@mui/material/Collapse';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+
 
 const drawerWidth = 240;
 
@@ -62,6 +58,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
+  // backgroundColor:'black',
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
@@ -83,6 +80,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
+    backgroundColor: '#383737',
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -96,19 +94,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    //  backgroundColor:'red',
     boxSizing: 'border-box',
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
+      //  backgroundColor:'green'
     }),
     ...(!open && {
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
+      // backgroundColor:'green'
     }),
   }),
 );
 
 export default function MiniDrawer() {
+
+  const [openOne, setOpenOne] = React.useState(true);
+
+  const handleClick = () => {
+    setOpenOne(!openOne);
+  };
+
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -142,19 +151,24 @@ export default function MiniDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+      <Drawer variant="permanent" open={open} sx={{ backgroundColor: 'red' }}>
+        <DrawerHeader sx={{ backgroundColor: '#383737', height: '600px' }}>
+          <div style={{ width: '60%', margin: 'auto', marginBottom: '8px' }}>
+            <img style={{ width: '100%' }} src="https://sistemageneral.azurewebsites.net/assets/dist/img/logo.png" />
+
+          </div>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? <ChevronRightIcon sx={{ color: 'white' }} /> : <ChevronLeftIcon sx={{ color: 'red' }} />}
           </IconButton>
         </DrawerHeader>
-        <List>
-        
-        </List>
-        <Divider />
-        <List>
+        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around',backgroundColor:'#383737'}}>
+          <AccountCircleRoundedIcon />
+          <h1 style={{fontSize:'13px',margin:'0px',padding:'0px',color:'white'}}>ADOLFO MONDOCORRE</h1>
+        </div>
+        {/*<Divider />*/}
+        <List sx={{ backgroundColor: '#383737' }}>
           {['VENTAS', 'PEDIDOS', 'REPORTES', 'RECETAS', 'CONFIGURACIONES', 'CLIENTES', 'SEGURIDAD', 'USUARIOS', 'PERFILES'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={text} disablePadding sx={{ display: 'block', backgroundColor: '#383737' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -169,102 +183,43 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <OtherHousesIcon sx={{ color: 'white', fontSize: '17px' }} />
+                </ListItemIcon >
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, color: 'white' }}
+                  primaryTypographyProps={{ fontSize: '13px' }}
+                />
               </ListItemButton>
             </ListItem>
-            
+
           ))}
+
+          <ListItemButton onClick={handleClick}>
+            <ListItemIcon>
+              <InboxIcon sx={{ color: 'white' }} />
+            </ListItemIcon>
+            <ListItemText sx={{ color: 'white' }} primary="Inbox" />
+            {openOne ? <ExpandLess sx={{ color: 'white' }} /> : <ExpandMore sx={{ color: 'white' }} />}
+          </ListItemButton>
+          <Collapse in={openOne} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon  >
+                  <StarBorder sx={{ color: 'white' }} />
+                </ListItemIcon>
+                <ListItemText sx={{ color: 'white' }} primary="Starred" />
+              </ListItemButton>
+            </List>
+          </Collapse>
         </List>
         <Divider />
-        
+
 
 
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        
+
       </Box>
     </Box>
   );
 }
-/*
-import * as React from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-
-export default function NestedList() {
-  const [open, setOpen] = React.useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Nested List Items
-        </ListSubheader>
-      }
-    >
-      <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-
-      
-
-    </List>
-  );
-}*/
