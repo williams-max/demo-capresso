@@ -31,9 +31,14 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import Paleta from '../common/Paleta';
+import InventarioCierre from '../../../app/modules/inventario-cierre/InventarioCierre';
+import Solicitudes from '../../../app/modules/solicitudes/Solicitudes';
+import RevisionPedido from '../../../app/modules/revision-pedido/RevisionPedido';
 
 
 const drawerWidth = 240;
+
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -74,6 +79,7 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
+  backgroundColor: '#383737',
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -109,9 +115,81 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+const items = [
+    {
+      title: "VENTAS",
+      items: [{
+        title: "SUCURSALES",
+        items: [{
+          title: "sucursal pando"},
+        { title: "surcusal salmanca" },
+        { title: "Sucursal América Oeste" },
+        { title: "Sucursal Hupermall" },
+        { title: "Sucursal Lincoln" }
+      ]
+      }]
+    },
+    {
+      title: "PEDIDIOS",
+      items: [{ title: "Pedidos extraordinarios" }, 
+              { title: "Cronograma Entrega" },
+              { title: "Permisos email"}, 
+              { title: "PLANTA",
+                items: [{
+                  title: "Pedidos consolidados"},
+                { title: "despacho"}]},
+                { title: "SUCURSAL DE PRUEBA",
+                items: [{
+                  title: "Inventario de Cierre"},
+                { title: "Solicitudes"}]}
+            ]
+    },
+    {
+      title: "REPORTES",
+      items: [{
+        title: "SUCURSALES",
+        items: [{
+          title: "sucursal pando"},
+        { title: "surcusal salmanca" },
+        { title: "Sucursal América Oeste" },
+        { title: "Sucursal Hupermall" },
+        { title: "Sucursal Lincoln" }
+      ]
+      }]
+    },
+    {
+      title: "RECETAS",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    },
+    {
+      title: "CONFIGURACIONES",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    },
+    {
+      title: "CLIENTES",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    },
+    {
+      title: "SEGURIDAD",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    },
+    {
+      title: "USUARIOS",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    },
+    {
+      title: "PERFILES",
+      items: [{ title: "subitem" }, { title: "subitem" }]
+    }
+  ];
+
+export default function MiniDrawer({ children }: any) {
 
   const [openOne, setOpenOne] = React.useState(true);
+
+  const [windowStatus, setWindowStatus] = React.useState({
+    solicitudesStatus: true,
+  })
 
   const handleClick = () => {
     setOpenOne(!openOne);
@@ -128,6 +206,63 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+function SidebarItem({ item }: any) {
+
+    const [collapsed, setCollapsed] = React.useState(true);
+    const { title, items } = item;
+
+    function toggleCollapse() {
+      setCollapsed(prevValue => !prevValue);
+    }
+
+    function onClick() {
+
+      console.log("items ", title)
+      if (Array.isArray(items)) {
+        toggleCollapse();
+      }
+    }
+
+    let expandIcon;
+    if (Array.isArray(items) && items.length) {
+      expandIcon = !collapsed ? <ExpandLess /> : <ExpandMore />;
+    }
+
+    return (
+      <>
+        <ListItem onClick={onClick} button dense>
+          <div style={{color:'white'}}>{title}</div>
+          {expandIcon}
+        </ListItem>
+        <Collapse in={!collapsed} timeout="auto" unmountOnExit>
+          {Array.isArray(items) ? (
+            <List disablePadding dense>
+              {items.map((subItem, index) => (
+                <SidebarItem key={`${subItem.id}${index}`} item={subItem} />
+              ))}
+            </List>
+          ) : null}
+        </Collapse>
+      </>
+    );
+  }
+
+function Sidebar({ items }: any) {
+    return (
+      <>
+        <List disablePadding dense>
+          {items.map((sidebarItem: any, index: any) => (
+            <SidebarItem
+              key={`${sidebarItem.title}${index}`}
+              item={sidebarItem}
+              
+            />
+          ))}
+        </List>
+      </>
+    );
+  }
 
   return (
     <Box sx={{ display: 'flex' }} >
@@ -152,74 +287,40 @@ export default function MiniDrawer() {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} sx={{ backgroundColor: 'red' }}>
-        <DrawerHeader sx={{ backgroundColor: '#383737', height: '600px' }}>
-          <div style={{ width: '60%', margin: 'auto', marginBottom: '8px' }}>
+        <DrawerHeader sx={{ backgroundColor: '#383737' }}>
+          <div style={{ width: '60%', margin: 'auto',marginTop:'20px', marginBottom: '8px' }}>
             <img style={{ width: '100%' }} src="https://sistemageneral.azurewebsites.net/assets/dist/img/logo.png" />
-
           </div>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon sx={{ color: 'white' }} /> : <ChevronLeftIcon sx={{ color: 'red' }} />}
           </IconButton>
         </DrawerHeader>
-        <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around',backgroundColor:'#383737'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#383737' }}>
           <AccountCircleRoundedIcon />
-          <h1 style={{fontSize:'13px',margin:'0px',padding:'0px',color:'white'}}>ADOLFO MONDOCORRE</h1>
+          <h1 style={{ fontSize: '13px', margin: '0px', padding: '0px', color: 'white' }}>ADOLFO MONDOCORRE</h1>
         </div>
         {/*<Divider />*/}
-        <List sx={{ backgroundColor: '#383737' }}>
-          {['VENTAS', 'PEDIDOS', 'REPORTES', 'RECETAS', 'CONFIGURACIONES', 'CLIENTES', 'SEGURIDAD', 'USUARIOS', 'PERFILES'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block', backgroundColor: '#383737' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <OtherHousesIcon sx={{ color: 'white', fontSize: '17px' }} />
-                </ListItemIcon >
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, color: 'white' }}
-                  primaryTypographyProps={{ fontSize: '13px' }}
-                />
-              </ListItemButton>
-            </ListItem>
-
-          ))}
-
-          <ListItemButton onClick={handleClick}>
-            <ListItemIcon>
-              <InboxIcon sx={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText sx={{ color: 'white' }} primary="Inbox" />
-            {openOne ? <ExpandLess sx={{ color: 'white' }} /> : <ExpandMore sx={{ color: 'white' }} />}
-          </ListItemButton>
-          <Collapse in={openOne} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon  >
-                  <StarBorder sx={{ color: 'white' }} />
-                </ListItemIcon>
-                <ListItemText sx={{ color: 'white' }} primary="Starred" />
-              </ListItemButton>
-            </List>
-          </Collapse>
+        <List sx={{ backgroundColor: '#383737', height:'100vh' }}>
+            
+          <Sidebar items={items}/>
         </List>
+       
         <Divider />
 
 
 
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
         <DrawerHeader />
-
+        {/*windowStatus.solicitudesStatus ?
+          <><Solicitudes/></> : <>
+            <InventarioCierre />
+          </>
+        */}
+        {children}
       </Box>
     </Box>
   );
 }
+//<Solicitudes/>
+//<RevisionPedido/
