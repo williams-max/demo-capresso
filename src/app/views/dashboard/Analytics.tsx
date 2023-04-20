@@ -48,12 +48,12 @@ const Analytics = () => {
           <div>funcionando 5555</div>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/*<DesktopDatePicker sx={{ width: '190px', height: '10px' }}
-              onChange={(newValue: any) => {
-              }}
+            <DesktopDatePicker sx={{ width: '190px', height: '10px' }}
+              //onChange={(newValue: any) => {
+              //}}
               slotProps={{ textField: { size: 'small' } }}
 
-            />*/}
+            />
           </LocalizationProvider>
         </Grid>
       </ContentBox>
