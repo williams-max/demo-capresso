@@ -18,7 +18,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StyledEngineProvider injectFirst>
-    <BrowserRouter basename="/sistema">
+    <BrowserRouter >
       <App />
     </BrowserRouter>
   </StyledEngineProvider>
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 
 /*
-
+ <BrowserRouter basename="/sistema">
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
