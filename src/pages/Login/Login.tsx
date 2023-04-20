@@ -3,13 +3,14 @@
 //import { BrowserRouter } from 'react-router-dom'
 //import { Navigation } from './app/Navigation'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 
 
 
 import { Typography, TextField, Button, InputAdornment, Box } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 
 import axios from 'axios';
@@ -21,20 +22,26 @@ import { Controller, useForm } from "react-hook-form";
 
 import { styled } from "@mui/system";
 import CircularProgress from "@mui/material/CircularProgress";
+import { KDImage } from '../../core/modal-loading/KDImage';
 
+
+//import { types } from '../../store/storeReducer'
+//import { StoreContext } from '../../store/StoreProvider';
 
 
 const DisabledBackground = styled(Box)({
   width: "100%",
-  height: "100%",
-  position: "fixed",
-  background: "#ccc",
+  height: "100vh",
+  position: "absolute",
+  background: "red",
   opacity: 0.5,
-  zIndex: 1
+  //zIndex: 1
 });
 
 const CircularLoading = () => (
   <>
+
+
     <CircularProgress
       size={70}
       sx={{
@@ -45,37 +52,44 @@ const CircularLoading = () => (
         zIndex: 2
       }}
     />
-    <DisabledBackground />
+
   </>
 );
 
 const Login = () => {
 
-//start config loading
-  const [loading, setLoading] = useState({
- 
-    circular: false,
+  const navigate = useNavigate()
+  //first  local storage 
+  //const { login } = useAuth()
 
-  });
+  //const [state, dispatch] = useReducer(authReducer, initialStateAuth)
+
+
+  //const [store, dispatch]  =  useContext(StoreContext)
+  //start config loading
+  const [loading, setLoading] = useState(
+
+    false
+
+  );
   const clickHandler = (type: any) => {
-    setLoading({ ...loading, [type]: true });
-    setTimeout(() => setLoading({ ...loading, [type]: false }), 2000);
+    setLoading(true);
+    // setTimeout(() => setLoading({ ...loading, [type]: false }), 2000);
   };
-//end confing loading 
+  //end confing loading 
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    setShowPassword(prev => !prev);
-  }
   const { handleSubmit, control } = useForm();
 
   const onSubmit = async (data: any) => {
 
-    clickHandler("circular")
+
+    //clickHandler("circular")
+    setLoading(true);
     console.log(data);
     const { user, pass } = data;
-  
+
     try {
       const respuesta = await axios.post('http://192.168.0.20/SistemaGeneralB/index.php/login2', {
         // "user": "amondocorre",
@@ -88,59 +102,67 @@ const Login = () => {
       console.log("res ", respuesta.data)
       if (respuesta?.data) {
         if (respuesta.data.status) {
+
+          console.log("nombre completo ...", respuesta.data.data.usuario[0].NOMBRE_COMPLETO);
+          console.log("menu  ...", respuesta.data.data.menu);
+
+          var name = respuesta.data.data.usuario[0].NOMBRE_COMPLETO;
+          var menu = respuesta.data.data.menu;
+
+          localStorage.setItem("user_menu", JSON.stringify(menu));
+          localStorage.setItem("user_name", name);
+
+
+          //dispatch({ type: types.updateUser, payload: name })
+          //dispatch({ type: types.authLogin })
+          //1 capturar de datos del usuario
+          //2 paso guargarlo en el useContext
           navigate('/home')
         } else {
+          setLoading(false);
           setErrorValueEmpty(true);
         }
       } else {
+        setLoading(false);
         setErrorValueEmpty(true);
       }
+      setLoading(false);
 
     } catch (error) {
+      setLoading(false)
       setErrorValueEmpty(true);
       // console.log(error)
 
     }
   };
 
-  const navigate = useNavigate();
 
   const [textValue, setTextValue] = useState<string>("");
 
   const [errorValueEmpty, setErrorValueEmpty] = useState(false);
-  const onTextChange = (e: any) => {
-    console.log(" valor user ", e.target.value)
-    setTextValue(e.target.value);
-  }
 
   const [textPasswordValue, setTextPasswordValue] = useState<string>("");
-  const onTextPasswordChange = (e: any) => {
-    console.log(" valor user ", e.target.value)
-    setTextPasswordValue(e.target.value);
-  }
 
 
 
   const handleClickShowPassword = () => {
-    
+
     setShowPassword(!showPassword);
   };
   return (
     <div style={{ backgroundColor: '#3C3C3C', width: '100%', height: '100vh' }}>
-      <div style={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div style={{ width: '18%', margin: 'auto', marginBottom: '8px' }}>
-          <img style={{ width: '100%' }} src="https://sistemageneral.azurewebsites.net/assets/dist/img/logo.png" />
-        </div>
+      <div style={{ margin: 'auto', display: 'flex', flexDirection: 'column',justifyContent:'center' }}>
+   
 
-        <form >
+        <form style={{marginTop:'5%'}}>
+
           <Box sx={{
             width: '100%', maxWidth: 390, margin: 'auto', backgroundColor: 'white'
             ,
           }}>
+            <div style={{ width: '60%', margin: 'auto', marginBottom: '8px',marginTop:'10%' }}>
+              <img style={{ width: '100%' ,marginTop:'10%'}} src="https://sistemageneral.azurewebsites.net/assets/dist/img/logo.png" />
+            </div>
 
             {errorValueEmpty ? <>
               <div style={{
@@ -166,9 +188,10 @@ const Login = () => {
                 name={"user"}
                 control={control}
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
-                  <TextField id="outlined-basic" label="Usuario" variant="outlined" sx={{
-                    width: '90%',
-                  }}
+                  <TextField id="outlined-basic" label="Usuario"
+                    variant="outlined" sx={{
+                      width: '90%',
+                    }}
                     value={value}
                     onChange={onChange}
                     error={!!error}
@@ -210,7 +233,7 @@ const Login = () => {
                       endAdornment: (
                         <InputAdornment position='end'>
 
-                          {showPassword ? <VisibilityOffIcon onClick={() => handleClickShowPassword()}
+                          {showPassword ? <RemoveRedEyeIcon onClick={() => handleClickShowPassword()}
                           /> : <VisibilityOffIcon onClick={() => handleClickShowPassword()} />}
                         </InputAdornment>
                       )
@@ -240,7 +263,11 @@ const Login = () => {
             />*/}
 
             <br />
-            {/*loading.circular ? <CircularLoading /> : null*/}
+            {loading ? <KDImage
+              src={`https://source.unsplash.com/random?sig=${0}`}
+              largeSrc={"./taza_loading.png"}
+              height={'200px'}
+            /> : null}
             <Button variant="contained" sx={{ marginTop: '5%', marginLeft: '69.5%' }}
 
               onClick={handleSubmit(onSubmit)}
@@ -251,6 +278,9 @@ const Login = () => {
 
           </Box>
         </form>
+
+
+
       </div>
     </div>
   )

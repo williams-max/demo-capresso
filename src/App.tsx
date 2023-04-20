@@ -16,6 +16,8 @@ import InventarioCierrePage from './pages/invetario-cierrre/InventarioCierrePage
 import SolicitudesPage from './pages/solicitudes/SolicitudesPage';
 import RevsionPedidioPage from './pages/revision-pedido/RevsionPedidioPage';
 import RecetaComboPage from './pages/receta-combo/RecetaComboPage';
+import CrearRecetaPage from './pages/crearreceta/CrearRecetaPage';
+import MuiNavbar from './core/components/navbar/MuiNavbar';
 
 
 
@@ -38,9 +40,9 @@ function App() {
 
   const submitData = async () => {
     try {
-      const respuesta = await axios.post('https://sistemageneralb.azurewebsites.net//index.php/login',{
-        "user":"amondocorre",
-        "pass":"Capress0"
+      const respuesta = await axios.post('https://sistemageneralb.azurewebsites.net//index.php/login', {
+        "user": "amondocorre",
+        "pass": "Capress0"
         /*
          "user": textValue,
         "pass": textPasswordValue
@@ -48,24 +50,33 @@ function App() {
       })
 
     } catch (error) {
-      
+
     }
   }
 
-  
-  return (
-    <BrowserRouter>
-    
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
 
-        <Route path="/inventario-cierre" element={<InventarioCierrePage />} />
-        <Route path="/solicitudes" element={<SolicitudesPage />} />
-        <Route path="/revision-pedidos" element={<RevsionPedidioPage />} />
-        <Route path="/receta-combo" element={<RecetaComboPage />} />
-      </Routes>
-    </BrowserRouter>
+  return (
+
+    <BrowserRouter  >
+
+
+
+     
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+
+          <Route path="/existencia-prueba" element={<InventarioCierrePage />} />
+          <Route path="/solicitud-prueba" element={<SolicitudesPage />} />
+          <Route path="/apv-prueba" element={<RevsionPedidioPage />} />
+          <Route path="/receta-combo" element={<RecetaComboPage />} />
+          <Route path="/receta" element={<CrearRecetaPage />} />
+        </Routes>
+    
+
+    </BrowserRouter >
+
+
   );
 }
 

@@ -1,5 +1,5 @@
-import { Typography, Button, Collapse, TextField, Modal } from '@mui/material'
-import React, { useState } from 'react'
+import { Typography, Button, Collapse, TextField, Modal, Grid } from '@mui/material'
+import React, { useState,useEffect } from 'react'
 import Paleta from '../../../core/components/common/Paleta'
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
@@ -20,6 +20,7 @@ import CleaningServicesRoundedIcon from '@mui/icons-material/CleaningServicesRou
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import SearchIcon from '@mui/icons-material/Search';
+import TableViewIcon from '@mui/icons-material/TableView';
 
 
 
@@ -27,6 +28,9 @@ import { ModalPersonalized } from './components/ModalPersonalized';
 import TablaRecetaCombo from './TablaRecetaCombo';
 import { ModalForm } from './components/ModalForm';
 import Demo from './components/Demo';
+import { ModalTabla } from './components/ModalTabla';
+import dataRecetaComboJson from '../../../data/m-recetas/crear-receta-combo/dataRecetaComboJson.json'
+import { AlertSave } from '../../common/alerts/alerts';
 
 const genders = [
   {
@@ -101,6 +105,56 @@ const RecetaCombo = () => {
   const [openModalTres, setOpenModalTres] = useState(false);
   const handleOpenModalTres = () => setOpenModalTres(true);
   const handleCloseModalTres = () => setOpenModalTres(false);
+  //four
+  const [openModalCuatro, setOpenModalCuatro] = useState(false);
+  const handleOpenModalCuatro = () => setOpenModalCuatro(true);
+  const handleCloseModalCuatro = () => setOpenModalCuatro(false);
+
+  const [originalRows, setoriginalRows] = useState<any>([])
+
+
+  const [rows, setRows] = useState<any>(originalRows);
+  const [searched, setSearched] = useState<string>("");
+
+
+  const requestSearch = (searchedVal: string) => {
+    //console.log("serach  ", searchedVal)
+    setSearched(searchedVal);
+    const filteredRows = originalRows.filter((row: any) => {
+      return row.nombre.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
+  };
+
+  const cancelSearch = () => {
+    setSearched("");
+    requestSearch("");
+  };
+
+
+  //star llamar a api
+  useEffect(() => {
+    // Actualiza el título del documento usando la API del navegador
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    console.log("receta data data ", dataRecetaComboJson)
+    setRows(dataRecetaComboJson)
+    setoriginalRows(dataRecetaComboJson)
+  }
+
+  //end llamar a la api
+
+  const deleteByIndex = (index: any) => {
+    console.log("eliminar ", index)
+    setRows((oldValues: any) => {
+      return oldValues.filter((_: any, i: any) => i !== index)
+    })
+
+    AlertSave({ title: "", message: "Se ha quitadado el elemento del combo" });
+  }
+
   return (
     <>
 
@@ -169,19 +223,20 @@ const RecetaCombo = () => {
       // onClick={handleClick}
       >
         <div style={{
-          width: '16%', padding: '0px', margin: '0px', display: 'flex',
+          width: '20%', padding: '0px', margin: '0px', display: 'flex',
           flexDirection: 'column', justifyContent: 'start', alignContent: 'start'
         }}>
-          <h6 style={{ padding: '0px', margin: '0px' }}>Menu Combo</h6>
+          <h6 style={{ padding: '0px', margin: '0px', marginBottom: '10px' }}>Menu Combo</h6>
 
           <TextField
             id="outlined-select-gender"
             select
-            label={gender === "" ? "Seleccione una Opción" : ""}
+            label="Menu Combo"
+            //label={gender === "" ? "Seleccione una Opción" : ""}
             value={gender}
             onChange={handleChange}
             //  sx={{ width: '100%' }}
-            InputLabelProps={{ shrink: false }}
+            // InputLabelProps={{ shrink: false }}
 
 
             SelectProps={{
@@ -214,6 +269,11 @@ const RecetaCombo = () => {
           backgroundColor: '#17A2B8', color: 'white', fontSize: '2.6rem', padding: '10px', margin: '5px'
         }} onClick={handleOpenModalDos} />
 
+        <TableViewIcon sx={{
+          backgroundColor: '#17A2B8', color: 'white', fontSize: '2.6rem', padding: '10px', margin: '5px'
+        }} onClick={handleOpenModalCuatro} />
+
+
 
 
 
@@ -224,86 +284,276 @@ const RecetaCombo = () => {
       </div>
 
       <br />
+
+      <Box sx={{ width: '100%' }}>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
+            <div >
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
+                <AddIcon sx={{
+                  backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                  marginLeft: '10px', marginBottom: '10px'
+                  , fontWeight: 'bold'
+                }}
+                  onClick={handleOpenModal}
+                />
+              </div>
+              <TextField
+                id="outlined-select-gender"
+                select
+                //label="demo"
+                label="Categoria"
+                // label={gender === "" ? "Seleccione una Opción" : ""}
+                value={gender}
+                onChange={handleChange}
+                sx={{ width: '100%' }}
+                //InputLabelProps={{ shrink: false }}
+
+
+                SelectProps={{
+                  MenuProps: {
+
+                  },
+                }}
+                //   margin='normal'
+                size="small"
+                variant="outlined"
+              >
+                {genders.map(option => (
+                  <MenuItem key={option.value} value={option.value}
+
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <div >
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
+                <AddIcon sx={{
+                  backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                  marginLeft: '10px', marginBottom: '10px'
+                  , fontWeight: 'bold'
+                }}
+                  onClick={handleOpenModal}
+                />
+              </div>
+              <TextField
+                id="outlined-select-gender"
+                select
+                //label="demo"
+                label="Categoria"
+                // label={gender === "" ? "Seleccione una Opción" : ""}
+                value={gender}
+                onChange={handleChange}
+                sx={{ width: '100%' }}
+                //InputLabelProps={{ shrink: false }}
+
+
+                SelectProps={{
+                  MenuProps: {
+
+                  },
+                }}
+                //   margin='normal'
+                size="small"
+                variant="outlined"
+              >
+                {genders.map(option => (
+                  <MenuItem key={option.value} value={option.value}
+
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <div >
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
+                <AddIcon sx={{
+                  backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                  marginLeft: '10px', marginBottom: '10px'
+                  , fontWeight: 'bold'
+                }}
+                  onClick={handleOpenModal}
+                />
+              </div>
+              <TextField
+                id="outlined-select-gender"
+                select
+                //label="demo"
+                label="Categoria"
+                // label={gender === "" ? "Seleccione una Opción" : ""}
+                value={gender}
+                onChange={handleChange}
+                sx={{ width: '100%' }}
+                //InputLabelProps={{ shrink: false }}
+
+
+                SelectProps={{
+                  MenuProps: {
+
+                  },
+                }}
+                //   margin='normal'
+                size="small"
+                variant="outlined"
+              >
+                {genders.map(option => (
+                  <MenuItem key={option.value} value={option.value}
+
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <div >
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
+                <AddIcon sx={{
+                  backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                  marginLeft: '10px', marginBottom: '10px'
+                  , fontWeight: 'bold'
+                }}
+                  onClick={handleOpenModal}
+                />
+              </div>
+              <TextField
+                id="outlined-select-gender"
+                select
+                //label="demo"
+                label="Categoria"
+                // label={gender === "" ? "Seleccione una Opción" : ""}
+                value={gender}
+                onChange={handleChange}
+                sx={{ width: '100%' }}
+                //InputLabelProps={{ shrink: false }}
+
+
+                SelectProps={{
+                  MenuProps: {
+
+                  },
+                }}
+                //   margin='normal'
+                size="small"
+                variant="outlined"
+              >
+                {genders.map(option => (
+                  <MenuItem key={option.value} value={option.value}
+
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+            </div>
+          </Grid>
+
+        </Grid>
+      </Box>
+
+      {/*
+   
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-        <div style={{ width: '20%' }}>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
-            <AddIcon sx={{
-              backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
-              marginLeft: '10px'
-              , fontWeight: 'bold'
-            }}
-              onClick={handleOpenModal}
-            />
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ width: '20%' }}>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <h6 style={{ padding: '0px', margin: '0px' }}>Categoria</h6>
+              <AddIcon sx={{
+                backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                marginLeft: '10px', marginBottom: '10px'
+                , fontWeight: 'bold'
+              }}
+                onClick={handleOpenModal}
+              />
+            </div>
+            <TextField
+              id="outlined-select-gender"
+              select
+              //label="demo"
+              label="Categoria"
+              // label={gender === "" ? "Seleccione una Opción" : ""}
+              value={gender}
+              onChange={handleChange}
+              sx={{ width: '100%' }}
+              //InputLabelProps={{ shrink: false }}
+
+
+              SelectProps={{
+                MenuProps: {
+
+                },
+              }}
+              //   margin='normal'
+              size="small"
+              variant="outlined"
+            >
+              {genders.map(option => (
+                <MenuItem key={option.value} value={option.value}
+
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
           </div>
-          <TextField
-            id="outlined-select-gender"
-            select
-            label={gender === "" ? "Seleccione una Opción" : ""}
-            value={gender}
-            onChange={handleChange}
-            sx={{ width: '100%' }}
-            InputLabelProps={{ shrink: false }}
+          <div style={{ width: '20%' }}>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <h6 style={{ padding: '0px', margin: '0px' }}>Subcategoria</h6>
+              <AddIcon sx={{
+                backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
+                marginLeft: '10px', marginBottom: '10px'
+                , fontWeight: 'bold'
+              }}
+                onClick={handleOpenModal}
+              />
+            </div>
+            <TextField
+              id="outlined-select-gender"
+              select
+              label="Subcategoria"
+              //label={gender === "" ? "Seleccione una Opción" : ""}
+              value={gender}
+              onChange={handleChange}
+              sx={{ width: '100%' }}
+              //   InputLabelProps={{ shrink: false }}
 
 
-            SelectProps={{
-              MenuProps: {
+              SelectProps={{
+                MenuProps: {
 
-              },
-            }}
-            //   margin='normal'
-            size="small"
-            variant="outlined"
-          >
-            {genders.map(option => (
-              <MenuItem key={option.value} value={option.value}
+                },
+              }}
+              //   margin='normal'
+              size="small"
+              variant="outlined"
+            >
+              {genders.map(option => (
+                <MenuItem key={option.value} value={option.value}
 
-              >
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
-        </div>
-        <div style={{ width: '20%' }}>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <h6 style={{ padding: '0px', margin: '0px' }}>Subcategoria</h6>
-            <AddIcon sx={{
-              backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
-              marginLeft: '10px'
-              , fontWeight: 'bold'
-            }}
-              onClick={handleOpenModal}
-            />
           </div>
-          <TextField
-            id="outlined-select-gender"
-            select
-            label={gender === "" ? "Seleccione una Opción" : ""}
-            value={gender}
-            onChange={handleChange}
-            sx={{ width: '100%' }}
-            InputLabelProps={{ shrink: false }}
-
-
-            SelectProps={{
-              MenuProps: {
-
-              },
-            }}
-            //   margin='normal'
-            size="small"
-            variant="outlined"
-          >
-            {genders.map(option => (
-              <MenuItem key={option.value} value={option.value}
-
-              >
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-
         </div>
         <div style={{ width: '20%' }}>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -311,7 +561,7 @@ const RecetaCombo = () => {
               Producto</h6>
             <AddIcon sx={{
               backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
-              marginLeft: '10px'
+              marginLeft: '10px', marginBottom: '10px'
               , fontWeight: 'bold'
             }}
               onClick={handleOpenModal}
@@ -320,11 +570,12 @@ const RecetaCombo = () => {
           <TextField
             id="outlined-select-gender"
             select
-            label={gender === "" ? "Seleccione una Opción" : ""}
+            label="Producto"
+            //label={gender === "" ? "Seleccione una Opción" : ""}
             value={gender}
             onChange={handleChange}
             sx={{ width: '100%' }}
-            InputLabelProps={{ shrink: false }}
+            // InputLabelProps={{ shrink: false }}
 
 
             SelectProps={{
@@ -351,7 +602,7 @@ const RecetaCombo = () => {
             <h6 style={{ padding: '0px', margin: '0px' }}>Presentacion</h6>
             <AddIcon sx={{
               backgroundColor: '#17A2B8', color: 'white', fontSize: '1.1rem', padding: '0.5px', margin: '0',
-              marginLeft: '10px'
+              marginLeft: '10px', marginBottom: '10px'
               , fontWeight: 'bold'
             }}
               onClick={handleOpenModal}
@@ -360,11 +611,12 @@ const RecetaCombo = () => {
           <TextField
             id="outlined-select-gender"
             select
-            label={gender === "" ? "Seleccione una Opción" : ""}
+            label="Presentacion"
+            // label={gender === "" ? "Seleccione una Opción" : ""}
             value={gender}
             onChange={handleChange}
             sx={{ width: '100%' }}
-            InputLabelProps={{ shrink: false }}
+            // InputLabelProps={{ shrink: false }}
 
 
             SelectProps={{
@@ -387,11 +639,13 @@ const RecetaCombo = () => {
 
         </div>
       </div>
+   */}
 
       <br />
-      <TablaRecetaCombo />
+      <TablaRecetaCombo    rows={rows}
+        deleteByIndex={(index: any) => deleteByIndex(index)} />
 
-    <Demo/>
+      {/*<Demo />*/}
 
 
       {/*<Paleta name="test" color="rgb(147, 20, 151)" COLOR_R="147" COLOR_G="20" COLOR_B="151" />
@@ -426,6 +680,13 @@ const RecetaCombo = () => {
         openModalPersonalized={openModalTres}
         handleOpenModalPersonalized={handleOpenModalTres}
         handleCloseModalPersonalized={handleCloseModalTres}
+        description="Deseas cerrar y guardar el formulario?"
+      />
+
+      <ModalTabla
+        openModalPersonalized={openModalCuatro}
+        handleOpenModalPersonalized={handleOpenModalCuatro}
+        handleCloseModalPersonalized={handleCloseModalCuatro}
         description="Deseas cerrar y guardar el formulario?"
       />
 

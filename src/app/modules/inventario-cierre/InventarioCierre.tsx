@@ -1,4 +1,4 @@
-import { Typography, Button, Collapse } from '@mui/material'
+import { Typography, Button, Collapse, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import Paleta from '../../../core/components/common/Paleta'
 import AddIcon from '@mui/icons-material/Add';
@@ -8,10 +8,13 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
+import TodayIcon from '@mui/icons-material/Today';
 import Select from '@mui/material/Select';
 import ExplicitOutlinedIcon from '@mui/icons-material/ExplicitOutlined';
-
+import { SiMicrosoftexcel } from "react-icons/si";
+import { ImFilePdf } from "react-icons/im";
+import { IoMdPaperPlane } from "react-icons/io";
+import { IoSaveOutline } from "react-icons/io5";
 
 const InventarioCierre = () => {
 
@@ -29,64 +32,57 @@ const InventarioCierre = () => {
 
   return (
     <>
-
-      <Button variant="contained" sx={{ backgroundColor: '#D32F2F' }} endIcon={<Select
-        // labelId="demo-simple-select-label"
-        // sx={{width:'400px'}}
-        //  id="demo-simple-select"
-        //  value={age}
-        // label="Age"
-
-
-        sx={{
-          height: '30px',
-          boxShadow: "none",
-          ".MuiOutlinedInput-notchedOutline": { border: 0 },
-          "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
-          },
-          "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
-          },
-        }}
-        onChange={handleChange}
-      
-     
-      >
-        <MenuItem value={10}><ExplicitOutlinedIcon sx={{color:'#43A047'}}/>  Excel</MenuItem>
-
-
-      </Select>}
-
-      >
-        Descargar Reportes
-      </Button >
-
-
-      <Collapse in={openOne} timeout="auto" unmountOnExit>
-        <Typography variant="subtitle1" gutterBottom sx={{ marginLeft: '15px', color: 'white' }} >
-          Excel
-        </Typography>
-
-      </Collapse>
       <div style={{
-        backgroundColor: `#343A40`, padding: '0.5%', display: 'flex', flexDirection: 'row',
-        justifyContent: 'space-between', borderRadius: '5px', marginTop: '1%'
+        backgroundColor: `#DC3547`, padding: '0.1%', display: 'flex', flexDirection: 'row',
+        justifyContent: 'space-between', borderRadius: '8px', marginTop: '0%'
+        , alignItems: 'center'
+
+      }}
+      >
+        <Typography variant="subtitle1" gutterBottom sx={{ marginLeft: '15px', color: 'white', fontSize:'20px', fontFamily:'Times New Roman' }} >
+          Inventario
+          &nbsp; &nbsp;
+          
+          <TextField
+                    id="date"
+                    label="Fecha Final"
+                    type="date"
+                    size="small"
+                    sx={{ width: '50%', color:'white' }}
+                    defaultValue="DD/MM/YYYY"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    
+                  />
+         
+        </Typography>
+        
+      </div>
+      <div style={{
+        backgroundColor: `#343A40`, padding: '0.3%', display: 'flex', flexDirection: 'row',
+        justifyContent: 'space-between', borderRadius: '0px', marginTop: '1%'
         , alignItems: 'center'
 
       }}
       // onClick={handleClick}
       >
 
-        <Typography variant="subtitle1" gutterBottom sx={{ marginLeft: '15px', color: 'white' }} >
+        <Typography variant="subtitle1" gutterBottom sx={{ marginLeft: '15px', color: 'white', fontSize:'20px', fontFamily:'Times New Roman' }} >
           Inventario
         </Typography>
         <div>
-          <SendIcon sx={{ color: 'white' }} />
+          <Button  sx={{ fontSize: '2em', color: 'white'}}><IoMdPaperPlane /></Button> 
+          <Button  sx={{ fontSize: '2em', color: 'white'}}><IoSaveOutline/></Button> 
+          <Button sx={{ fontSize: '2em',color: 'white' }}><SiMicrosoftexcel/></Button>
+          <Button sx={{ fontSize: '2em',color: 'white' }}><ImFilePdf/></Button>
         </div>
       </div>
+      {/* <div>
+        <Typography sx={{fontSize:'20px', fontFamily:'Times New Roman'}}>Descargar</Typography>
+        <Button sx={{ fontSize: 35,color: 'green' }}><SiMicrosoftexcel/></Button>
+        <Button sx={{ fontSize: 35,color: 'red' }}><ImFilePdf/></Button>
+      </div> */}
 
 
       <Paleta name="test" color="rgb(147, 20, 151)" COLOR_R="147" COLOR_G="20" COLOR_B="151" />

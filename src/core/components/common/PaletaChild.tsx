@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import TablaInventarioCierre from '../../../app/modules/inventario-cierre/TablaInventarioCierre';
 import TablaSolicitudes from '../../../app/modules/solicitudes/TablaSolicitudes';
 
+
 const PaletaChild = (props: any) => {
   const { name, color, COLOR_R, COLOR_G, COLOR_B } = props;
 
