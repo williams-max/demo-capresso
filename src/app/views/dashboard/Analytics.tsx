@@ -47,14 +47,14 @@ const Analytics = () => {
         <Grid container spacing={3}>
           <div>funcionando 5555</div>
 
-          {/*<LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker sx={{ width: '190px', height: '10px' }}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/*<DesktopDatePicker sx={{ width: '190px', height: '10px' }}
               onChange={(newValue: any) => {
               }}
               slotProps={{ textField: { size: 'small' } }}
 
-            />
-          </LocalizationProvider>*/}
+            />*/}
+          </LocalizationProvider>
         </Grid>
       </ContentBox>
     </Fragment>
