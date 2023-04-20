@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "useDefineForClassFields": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,12 +17,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-
-
-  
-    "jsx": "react",
-
+    "jsx": "react"
   },
-  "include": ["src", "environments"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src"
+  ]
 }
