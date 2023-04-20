@@ -1,6 +1,7 @@
-import { Card, Grid, styled, useTheme } from '@mui/material';
+import { Card, Grid, Stack, TextField, styled, useTheme } from '@mui/material';
 import { Fragment } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -45,14 +46,26 @@ const Analytics = () => {
     <Fragment>
       <ContentBox className="analytics">
         <Grid container spacing={3}>
-          <div>funcionando 5555</div>
+          <div>funcionando 77</div>
+
+
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker sx={{ width: '190px', height: '10px' }}
-              //onChange={(newValue: any) => {
-              //}}
+            {/*<DesktopDatePicker sx={{ width: '190px', height: '10px' }}
+              onChange={(newValue: any) => {
+
+                console.log("value ", newValue)
+              }}
               slotProps={{ textField: { size: 'small' } }}
 
+            />*/}
+            <DatePicker
+              label="Helper text example"
+              slotProps={{
+                textField: {
+                  helperText: 'MM/DD/YYYY',
+                },
+              }}
             />
           </LocalizationProvider>
         </Grid>
