@@ -6,6 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 //import Campaigns from './shared/Campaigns';
 //import DoughnutChart from './shared/Doughnut';
 //import RowCards from './shared/RowCards';
@@ -59,14 +60,17 @@ const Analytics = () => {
               slotProps={{ textField: { size: 'small' } }}
 
             />*/}
-            <DatePicker
-              label="Helper text example"
-              slotProps={{
-                textField: {
-                  helperText: 'MM/DD/YYYY',
-                },
-              }}
-            />
+            <DemoContainer components={['DatePicker']}>
+
+              <DatePicker
+                label="Helper text example"
+                slotProps={{
+                  textField: {
+                    helperText: 'MM/DD/YYYY',
+                  },
+                }}
+              />
+            </DemoContainer>
           </LocalizationProvider>
         </Grid>
       </ContentBox>
