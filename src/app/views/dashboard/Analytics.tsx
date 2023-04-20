@@ -1,12 +1,6 @@
 import { Card, Grid, Stack, TextField, styled, useTheme } from '@mui/material';
 import { Fragment } from 'react';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { DesktopDatePicker } from '@mui/x-date-pickers';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 //import Campaigns from './shared/Campaigns';
 //import DoughnutChart from './shared/Doughnut';
 //import RowCards from './shared/RowCards';
@@ -14,6 +8,12 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 //import StatCards2 from './shared/StatCards2';
 //import TopSellingTable from './shared/TopSellingTable';
 //import UpgradeCard from './shared/UpgradeCard';
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 const ContentBox = styled('div')(({ theme }) => ({
   margin: '30px',
@@ -52,26 +52,10 @@ const Analytics = () => {
 
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {/*<DesktopDatePicker sx={{ width: '190px', height: '10px' }}
-              onChange={(newValue: any) => {
-
-                console.log("value ", newValue)
-              }}
-              slotProps={{ textField: { size: 'small' } }}
-
-            />*/}
-            <DemoContainer components={['DatePicker']}>
-
-              <DatePicker
-                label="Helper text example"
-                slotProps={{
-                  textField: {
-                    helperText: 'MM/DD/YYYY',
-                  },
-                }}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
+      <DemoContainer components={['DatePicker']}>
+        <DatePicker label="Basic date picker" />
+      </DemoContainer>
+    </LocalizationProvider>
         </Grid>
       </ContentBox>
     </Fragment>
