@@ -27,7 +27,7 @@ const AppRadio = () => {
           <SimpleRadio />
         </SimpleCard>
 
-        <SimpleCard title="Standalone Radio Button">
+       <SimpleCard title="Standalone Radio Button">
           <StandaloneRadio />
         </SimpleCard>
 
