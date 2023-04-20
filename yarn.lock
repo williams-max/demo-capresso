@@ -1306,7 +1306,7 @@
   "resolved" "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.8.0.tgz"
   "version" "0.8.0"
 
-"@emotion/react@^11.10.4", "@emotion/react@^11.10.6":
+"@emotion/react@^11.10.4", "@emotion/react@latest":
   "integrity" "sha512-6HT8jBmcSkfzO7mc+N1L9uwvOnlcGoix8Zn7srt+9ga0MjREo6lRpuVX0kzo6Jp6oTqDhREOFsygN6Ew4fEQbw=="
   "resolved" "https://registry.npmjs.org/@emotion/react/-/react-11.10.6.tgz"
   "version" "11.10.6"
@@ -1336,7 +1336,7 @@
   "resolved" "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.2.1.tgz"
   "version" "1.2.1"
 
-"@emotion/styled@^11.10.4", "@emotion/styled@^11.10.6":
+"@emotion/styled@^11.10.4", "@emotion/styled@latest":
   "integrity" "sha512-OXtBzOmDSJo5Q0AFemHCfl+bUueT8BIcPSxu0EGTpGk6DmI5dnhSzQANm1e1ze0YZL7TDyAyy6s/b/zmGOS3Og=="
   "resolved" "https://registry.npmjs.org/@emotion/styled/-/styled-11.10.6.tgz"
   "version" "11.10.6"
@@ -1788,7 +1788,7 @@
     "prop-types" "^15.8.1"
     "react-is" "^18.2.0"
 
-"@mui/material@^5.10.3", "@mui/material@^5.11.13":
+"@mui/material@^5.10.3", "@mui/material@latest":
   "integrity" "sha512-2CnSj43F+159LbGmTLLQs5xbGYMiYlpTByQhP7c7cMX6opbScctBFE1PuyElpAmwW8Ag9ysfZH1d1MFAmJQkjg=="
   "resolved" "https://registry.npmjs.org/@mui/material/-/material-5.11.13.tgz"
   "version" "5.11.13"
@@ -1886,7 +1886,7 @@
     "prop-types" "^15.8.1"
     "react-is" "^18.2.0"
 
-"@mui/x-date-pickers@^6.0.3":
+"@mui/x-date-pickers@latest":
   "integrity" "sha512-TgKfWf47WiNzSAY3C8R+FQ2grtVveoS3WCtLf6E1I/O2adxruxXA+AFiIRVnfv8QX9QFLNayTKoaVUISg/PcXQ=="
   "resolved" "https://registry.npmjs.org/@mui/x-date-pickers/-/x-date-pickers-6.0.3.tgz"
   "version" "6.0.3"
@@ -4459,12 +4459,12 @@
   "resolved" "https://registry.npmjs.org/date-arithmetic/-/date-arithmetic-4.1.0.tgz"
   "version" "4.1.0"
 
-"date-fns@^2.0.1", "date-fns@^2.24.0", "date-fns@^2.29.3":
+"date-fns@^2.0.1", "date-fns@^2.24.0", "date-fns@^2.29.3", "date-fns@latest":
   "integrity" "sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA=="
   "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.29.3.tgz"
   "version" "2.29.3"
 
-"dayjs@^1.11.7":
+"dayjs@latest":
   "integrity" "sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.11.7.tgz"
   "version" "1.11.7"
