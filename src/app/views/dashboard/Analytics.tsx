@@ -45,7 +45,7 @@ const Analytics = () => {
     <Fragment>
       <ContentBox className="analytics">
         <Grid container spacing={3}>
-          <div>funcionando</div>
+          <div>funcionando 5555</div>
 
           {/*<LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker sx={{ width: '190px', height: '10px' }}
